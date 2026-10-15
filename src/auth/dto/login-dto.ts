@@ -1,38 +1,10 @@
+import { IsNotEmpty, Length } from "class-validator";
 
-import {
-    IsNotEmpty,
-    IsEmail,
-    MinLength,
-    MaxLength,
-    Validate,
-    ValidatorConstraint,
-    ValidatorConstraintInterface,
-    ValidationArguments,
-} from 'class-validator';
-
-@ValidatorConstraint({ name: 'MatchPassword', async: false })
-export class MatchPassword implements ValidatorConstraintInterface {
-    validate(confirmPassword: string, args: ValidationArguments) {
-        const object = args.object as any;
-        return object.password === confirmPassword;
-    }
-
-    defaultMessage(args: ValidationArguments) {
-        return 'Password dan konfirmasi password harus sama';
-    }
-}
-
-export class LoginDto {
-    @IsNotEmpty({ message: 'Email harus diisi' })
-    @IsEmail({}, { message: 'Format email harus valid' })
+export class loginDto {
+    @IsNotEmpty({message: "Email harus diisi"})
     readonly email: string;
 
-    @IsNotEmpty({ message: 'Password harus diisi' })
-    @MinLength(3, { message: 'Password minimal 3 karakter' })
-    @MaxLength(16, { message: 'Password maksimal 16 karakter' })
+    @IsNotEmpty({message: "Password harus diisi"})
+    @Length(3, 16, { message: "Password minimal 3 karakter dan maksimal 16 karakter" })
     readonly password: string;
-
-    @IsNotEmpty({ message: 'Konfirmasi password harus diisi' })
-    @Validate(MatchPassword)
-    readonly confirmPassword: string;
 }
