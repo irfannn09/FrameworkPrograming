@@ -1,0 +1,19 @@
+services :
+  #configurasi untuk container databse
+  postgre-db:
+    image: postgres:16-alpine
+    container_name: harkat_postgre_container
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: supersecretpassword
+      POSTGRES_DB: harkat_app_libary
+    ports: 
+        #format portID: komputer:postdicountainer
+      - "5432:5432"
+    volumes:
+      #untuk menyimoan databse ke hdd
+      - postgres_data_volume:/var/lib/postgresql/data
+
+volumes:
+  postgres_data_volume:
